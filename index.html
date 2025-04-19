@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Argi Test Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(ellipse at center, #0f0f0f 0%, #000000 100%);
+      overflow: hidden;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .login-container {
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      border-radius: 16px;
+      border: 2px solid #0ff;
+      box-shadow: 0 0 20px #0ff, 0 0 60px #00f;
+      width: 100%;
+      max-width: 420px;
+      z-index: 2;
+      animation: glowFadeIn 2s ease forwards;
+      text-align: center;
+    }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 15px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); filter: drop-shadow(0 0 5px #0ff); }
+      50% { transform: scale(1.1); filter: drop-shadow(0 0 20px #0ff); }
+      100% { transform: scale(1); filter: drop-shadow(0 0 5px #0ff); }
+    }
+
+    h2 {
+      font-size: 28px;
+      color: #0ff;
+      text-shadow: 0 0 10px #0ff, 0 0 20px #00f;
+    }
+
+    .form-group {
+      margin: 20px 0;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #ccc;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #00f;
+      border-radius: 8px;
+      background-color: #111;
+      color: #0ff;
+      outline: none;
+      transition: box-shadow 0.3s ease;
+    }
+
+    input:focus {
+      box-shadow: 0 0 10px #0ff, 0 0 20px #00f;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(45deg, #00f, #0ff);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      text-shadow: 0 0 5px #fff;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #0ff;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .fade-out {
+      animation: fadeOut 1s forwards;
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+    }
+
+    @keyframes glowFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    body {
+      cursor: url('https://cur.cursors-4u.net/symbols/sym-1/sym66.ani'), auto;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="login-container">
+  <img src="https://upload.wikimedia.org
+  /wikipedia/commons/4/42/Sound-icon.svg" alt="Logo" class="logo">
+  <h2>🔒 Argi Login Portal</h2>
+  <form id="loginForm" autocomplete="off">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" required />
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" required />
+    </div>
+    <button type="submit" class="btn">Login</button>
+    <div class="message" id="message"></div>
+  </form>
+</div>
+
+<audio id="successSound" src="https://www.myinstants.com/media/sounds/success-fanfare.mp3"></audio>
+<audio id="failSound" src="https://www.myinstants.com/media/sounds/error.mp3"></audio>
+
+<script>
+  const form = document.getElementById('loginForm');
+  const message = document.getElementById('message');
+  const successSound = document.getElementById('successSound');
+  const failSound = document.getElementById('failSound');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (username === 'argi' && password === 'password') {
+      successSound.play();
+      message.style.color = 'lightgreen';
+      message.textContent = 'Login successful!';
+      const container = document.querySelector('.login-container');
+      container.classList.add('fade-out');
+      setTimeout(() => window.location.href = "home.html", 1000);
+    } else {
+      failSound.play();
+      message.style.color = '#f44336';
+      message.textContent = 'Invalid credentials.';
+    }
+  });
+
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function Particle() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 2 + 1;
+    this.speedX = (Math.random() - 0.5) * 0.5;
+    this.speedY = (Math.random() - 0.5) * 0.5;
+  }
+
+  Particle.prototype.update = function() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+    }
+  };
+
+  Particle.prototype.draw = function() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0, 255, 255, 0.7)';
+    ctx.fill();
+  };
+
+  function initParticles(count) {
+    for (let i = 0; i < count; i++) {
+      particles.push(new Particle());
+    }
+  }
+
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.update();
+      p.draw();
+    });
+    requestAnimationFrame(animateParticles);
+  }
+
+  initParticles(80);
+  animateParticles();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Argi's Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #111;
+      color: #fff;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      animation: slideIn 0.6s ease;
+    }
+
+    .light-mode {
+      background-color: #f2f2f2;
+      color: #222;
+    }
+
+    .sidebar {
+      background-color: #1e1e1e;
+      width: 220px;
+      height: 100vh;
+      padding: 20px 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    body.light-mode .sidebar {
+      background-color: #fff;
+    }
+
+    .sidebar h1 {
+      font-size: 24px;
+      color: #fff;
+      margin-bottom: 40px;
+    }
+
+    body.light-mode .sidebar h1 {
+      color: #222;
+    }
+
+    .sidebar h1 span {
+      color: orange;
+    }
+
+    .nav-link {
+      color: #ccc;
+      text-decoration: none;
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: orange;
+    }
+
+    body.light-mode .nav-link {
+      color: #333;
+    }
+
+    body.light-mode .nav-link.active {
+      color: orange;
+    }
+
+    .main,
+    .section {
+      flex: 1;
+      padding: 40px;
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      animation: slideIn 0.5s ease;
+    }
+
+    .main.active,
+    .section.active {
+      display: flex;
+    }
+
+    .intro {
+      max-width: 600px;
+    }
+
+    .intro h2 {
+      font-size: 28px;
+    }
+
+    .intro h3 {
+      font-size: 24px;
+      color: orange;
+    }
+
+    .intro p {
+      font-size: 16px;
+      color: #bbb;
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      background: orange;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #e69500;
+    }
+
+    .profile-img {
+      width: 250px;
+      height: 350px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 4px solid orange;
+    }
+
+    .corner {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 3px solid orange;
+    }
+
+    .corner.top-left {
+      top: 40px;
+      left: 40px;
+      border-bottom: none;
+      border-right: none;
+    }
+
+    .corner.bottom-right {
+      bottom: 40px;
+      right: 30px;
+      border-top: none;
+      border-left: none;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .section {
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .section-header h2 {
+      font-size: 32px;
+      color: orange;
+      margin-bottom: 10px;
+    }
+
+    .section-header hr {
+      width: 80px;
+      border: 2px solid orange;
+      margin-bottom: 30px;
+    }
+
+    .section-body {
+      font-size: 16px;
+      color: #ccc;
+      line-height: 1.6;
+      max-width: 800px;
+    }
+
+    .logout-btn {
+      background-color: #f44336;
+      margin-top: auto;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    .logout-btn:hover {
+      background-color: #d32f2f;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 10px;
+      }
+
+      .main,
+      .section {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .profile-img {
+        width: 200px;
+        height: auto;
+        margin-top: 20px;
+      }
+
+      .corner.top-left {
+        top: 20px;
+        left: 20px;
+      }
+
+      .corner.bottom-right {
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+    .info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    animation: fadeIn 0.5s ease;
+  }
+
+  .info-table th,
+  .info-table td {
+    border: 1px solid #555;
+    padding: 12px 10px;
+    text-align: left;
+    color: #ccc;
+    cursor: default;
+
+  body.light-mode .info-table th,
+  body.light-mode .info-table td {
+    border-color: #ddd;
+    color: #333;
+  }
+
+    .info-table th {
+      background-color: #222;
+      color: orange;
+    }
+  }
+
+  body.light-mode .info-table th {
+    background-color: #f9f9f9;
+    color: orange;
+  }
+
+
+  .info-table tr.expandable {
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .info-table tr.expandable:hover {
+    background-color: #222;
+
+
+    .info-table th {
+    background-color: #222;
+    color: #00bfff;
+    text-shadow: 0 0 6px #00bfff;
+    transition: all 0.3s ease;
+  }
+
+  .btn, .nav-link {
+    transition: all 0.3s ease;
+  }
+
+  .btn:hover,
+  .nav-link:hover,
+  .nav-link.active {
+    color: #00bfff !important;
+    text-shadow: 0 0 10px #00bfff;
+  }
+
+  .corner {
+    border-color: #00bfff;
+    box-shadow: 0 0 10px #00bfff;
+  }
+
+  .toggle-icon {
+    float: right;
+    transition: transform 0.3s ease, color 0.3s ease;
+    color: #bbb;
+    cursor: pointer;
+  }
+
+  .expandable:hover .toggle-icon {
+    color: #00bfff;
+    text-shadow: 0 0 5px #00bfff;
+  }
+
+  .expandable:hover {
+    background-color: #1a1a1a;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+  }
+
+  .rotated {
+    transform: rotate(180deg);
+  }
+
+  .collapsible-row {
+    display: table-row;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.4s ease;
+    height: auto;
+    display: none;
+    animation: fadeIn 0.5s ease;
+  }
+  .ollapsible-row.show {
+  max-height: 200px; 
+  opacity: 1;
+  display: table-row;
+  }
+
+  .collapsible-row td {
+    background-color: #111;
+    color: #ccc;
+    box-shadow: inset 0 0 5px #00bfff;
+  }
+
+  .glow-box {
+    border: 1px solid #00bfff;
+    box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
+    border-radius: 10px;
+    transition: box-shadow 0.4s ease;
+  }
+  }
+
+  body.light-mode .info-table tr.expandable:hover {
+    background-color: #eee;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h1><span>Ar</span>gi</h1>
+    <a href="#" class="nav-link active" data-section="main">Home</a>
+    <a href="#" class="nav-link" data-section="about">About</a>
+    <button id="themeToggle" class="btn logout-btn" title="Toggle Theme">
+      <i class="fas fa-moon"></i>
+    </button>
+    <button onclick="logout()" class="btn logout-btn" title="Logout">
+      <i class="fas fa-power-off"></i>
+    </button>
+  </div>
+
+  
+
+  <div class="main active" id="main">
+    <div class="intro">
+      <h2>Hello, my name is <span style="color: orange;">Argi Sumaylo</span></h2>
+      <h3>I'm a Graphic Designer</h3>
+      <p>
+        I'm a beginner in web design, and I truly enjoy exploring new ideas and learning as I go.
+      </p>
+    </div>
+    <div style="text-align: center;">
+      <img src="test.jpg" alt="Portrait of Argi Sumaylo" class="profile-img" />
+      <br />
+      <a href="#" class="btn" id="moreAboutBtn" style="margin-top: 20px;">More About Me</a>
+    </div>
+    <div class="corner top-left"></div>
+    <div class="corner bottom-right"></div>
+  </div>
+
+  <div class="section" id="about">
+    <div class="section-header"><h2>About Me</h2><hr /></div>
+    <div class="section-body">
+      <div style="margin-bottom: 30px;">
+        <h3><i class="fas fa-user-circle" style="color: #00bfff; text-shadow: 0 0 8px #00bfff;"></i> Who Am I?</h3>
+        <p style="font-size: 17px; color: #bbb; line-height: 1.8;">
+          👋 I'm <strong>Argi Sumaylo</strong>, a graphic designer and aspiring web developer with a love for creativity and clean design.
+          I specialize in blending aesthetics and function — turning ideas into engaging visual experiences.
+          I’m always eager to learn and evolve, one pixel at a time.
+        </p>
+      </div>
+    
+      <div style="margin-top: 30px;">
+        <h3><i class="fas fa-graduation-cap" style="color: #00bfff; text-shadow: 0 0 8px #00bfff;"></i> Education</h3>
+        <table class="info-table glow-box">
+          <thead>
+            <tr>
+              <th><i class="fas fa-calendar"></i> Year</th>
+              <th><i class="fas fa-book-open"></i> Degree</th>
+              <th><i class="fas fa-school"></i> Institute</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="expandable" onclick="toggleRow(this)">
+              <td>2020 - 2023 <i class="fas fa-chevron-down toggle-icon" style="float: right;"></i></td>
+              <td>BS in Information Technology</td>
+              <td>University of Cebu - Banilad</td>
+            </tr>
+            <tr class="collapsible-row">
+              <td colspan="3">ambot testing lang sa.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    
+      <div style="margin-top: 30px;">
+        <h3><i class="fas fa-briefcase" style="color: #00bfff; text-shadow: 0 0 8px #00bfff;"></i> Experience</h3>
+        <table class="info-table glow-box">
+          <thead>
+            <tr>
+              <th><i class="fas fa-calendar-alt"></i> Years</th>
+              <th><i class="fas fa-user-tie"></i> Role</th>
+              <th><i class="fas fa-building"></i> Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="expandable" onclick="toggleRow(this)">
+              <td>2020 - 2021 <i class="fas fa-chevron-down toggle-icon" style="float: right;"></i></td>
+              <td>Web Designer & Developer</td>
+              <td>Freelance</td>
+            </tr>
+            <tr class="collapsible-row">
+              <td colspan="3">kaya pa.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    
+      <div style="margin-top: 30px;">
+        <h3><i class="fas fa-tools" style="color: #00bfff; text-shadow: 0 0 8px #00bfff;"></i> Skills</h3>
+        <div style="margin-bottom: 10px;">
+          <p>Web Designer <span style="float: right;">90%</span></p>
+          <div style="background: #222; border-radius: 20px; height: 12px;">
+            <div style="width: 90%; height: 100%; background: linear-gradient(to right, #00bfff, #1e90ff); border-radius: 20px; box-shadow: 0 0 10px #00bfff;"></div>
+          </div>
+        </div>
+        <div style="margin-bottom: 10px;">
+          <p>Ms Office <span style="float: right;">88%</span></p>
+          <div style="background: #222; border-radius: 20px; height: 12px;">
+            <div style="width: 85%; height: 100%; background: linear-gradient(to right, #00bfff, #1e90ff); border-radius: 20px; box-shadow: 0 0 10px #00bfff;"></div>
+          </div>
+        </div>
+        <div style="margin-bottom: 10px;">
+          <p>TroubleShooting <span style="float: right;">85%</span></p>
+          <div style="background: #222; border-radius: 20px; height: 12px;">
+            <div style="width: 70%; height: 100%; background: linear-gradient(to right, #00bfff, #1e90ff); border-radius: 20px; box-shadow: 0 0 10px #00bfff;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <script>
+    const navLinks = document.querySelectorAll('.nav-link');
+    const mainSection = document.getElementById('main');
+    const sections = document.querySelectorAll('.section');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        navLinks.forEach(nav => nav.classList.remove('active'));
+        this.classList.add('active');
+
+        const target = this.getAttribute('data-section');
+        mainSection.classList.remove('active');
+        sections.forEach(sec => sec.classList.remove('active'));
+
+        if (target === 'main') {
+          mainSection.classList.add('active');
+        } else {
+          document.getElementById(target).classList.add('active');
+        }
+      });
+    });
+
+    document.getElementById('moreAboutBtn').addEventListener('click', function (e) {
+      e.preventDefault();
+      document.querySelector('[data-section="about"]').click();
+    });
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      const icon = document.querySelector('#themeToggle i');
+      icon.classList.toggle('fa-moon');
+      icon.classList.toggle('fa-sun');
+    });
+
+    function logout() {
+      window.location.href = "index.html";
+    }
+
+    function toggleRow(row) {
+    const nextRow = row.nextElementSibling;
+    if (!nextRow || !nextRow.classList.contains('collapsible-row')) return;
+
+    const icon = row.querySelector('.toggle-icon');
+
+    if (nextRow.classList.contains("show")) {
+      nextRow.classList.remove("show");
+      icon.classList.remove("rotated");
+    } else {
+      nextRow.classList.add("show");
+      icon.classList.add("rotated");
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+  const expandableRows = document.querySelectorAll(".expandable");
+
+  expandableRows.forEach((row) => {
+    const icon = row.querySelector(".toggle-icon");
+    const nextRow = row.nextElementSibling;
+
+    icon.addEventListener("click", function (e) {
+      e.stopPropagation(); // Prevent event bubbling
+      if (nextRow && nextRow.classList.contains("collapsible-row")) {
+        nextRow.classList.toggle("show");
+        icon.classList.toggle("rotated");
+      }
+    });
+  });
+  });
+</script>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+</body>
+</html>
