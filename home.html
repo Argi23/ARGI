@@ -11,7 +11,7 @@
       box-sizing: border-box;
     }
 
-    body {
+    body {  
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #111;
@@ -93,8 +93,85 @@
     .main.active,
     .section.active {
       display: flex;
+      opacity: 1 !important;
+      transform: translateY(0);
+      pointer-events: auto;
     }
 
+    .section-header{
+      text-align: center;
+    }
+    .calculator {
+      background: rgba(0, 0, 0, 0.75);
+      border: 2px solid #0ff;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 0 20px #0ff, 0 0 60px #00f;
+      width: 100%;
+      max-width: 340px;
+      margin: 20px auto;
+    }
+    .display {
+      background: #111;
+      color: #0ff;
+      font-size: 2rem;
+      padding: 20px;
+      text-align: right;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #00f;
+      box-shadow: inset 0 0 10px #0ff;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .btn {
+      padding: 20px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 10px;
+      background: #111;
+      color: #0ff;
+      box-shadow: 0 0 8px #00f;
+      cursor: pointer;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #0ff;
+    }
+    .operator {
+      background: linear-gradient(45deg, #0ff, #00f);
+      color: #000;
+      font-weight: bold;
+    }
+    .equals {
+      grid-column: span 4;
+      background: #0ff;
+      color: #000;
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+        align-items: center;
+      }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px;
+      }
+      .main, .section {
+        padding: 20px;
+        width: 100%;
+      }
+    }
     .intro {
       max-width: 600px;
     }
@@ -173,6 +250,10 @@
     }
 
     .section {
+      opacity: 0;
+      transform: translateY(30px);
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
       flex-direction: column;
       text-align: left;
     }
@@ -259,14 +340,19 @@
     animation: fadeIn 0.5s ease;
   }
 
-  .info-table th,
+  .info-table th{
+  background-color: #222;
+  color: #00bfff;
+  text-shadow: 0 0 6px #00bfff;
+  transition: all 0.3s ease;
+  }
   .info-table td {
     border: 1px solid #555;
     padding: 12px 10px;
     text-align: left;
     color: #ccc;
     cursor: default;
-
+  }
   body.light-mode .info-table th,
   body.light-mode .info-table td {
     border-color: #ddd;
@@ -276,8 +362,7 @@
     .info-table th {
       background-color: #222;
       color: orange;
-    }
-  }
+    } 
 
   body.light-mode .info-table th {
     background-color: #f9f9f9;
@@ -339,19 +424,14 @@
   }
 
   .collapsible-row {
-    display: table-row;
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease, opacity 0.4s ease;
-    height: auto;
-    display: none;
-    animation: fadeIn 0.5s ease;
+  display: none;
+  opacity: 0;
+  transition: all 0.4s ease;
   }
-  .ollapsible-row.show {
-  max-height: 200px; 
-  opacity: 1;
+
+  .collapsible-row.show {
   display: table-row;
+  opacity: 1;
   }
 
   .collapsible-row td {
@@ -371,11 +451,125 @@
   body.light-mode .info-table tr.expandable:hover {
     background-color: #eee;
   }
+  .calculator {
+  background: rgba(0, 0, 0, 0.75);
+  border: 2px solid #0ff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 0 20px #0ff, 0 0 60px #00f;
+  width: 320px;
+  margin: 0 auto;
+}
 
+.display {
+  background: #111;
+  color: #0ff;
+  font-size: 2rem;
+  padding: 20px;
+  text-align: right;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #00f;
+  box-shadow: inset 0 0 10px #0ff;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.btn {
+  padding: 20px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background: #111;
+  color: #0ff;
+  box-shadow: 0 0 8px #00f;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #0ff;
+}
+
+.operator {
+  background: linear-gradient(45deg, #0ff, #00f);
+  color: #000;
+  font-weight: bold;
+}
+
+.equals {
+  grid-column: span 4;
+  background: #0ff;
+  color: #000;
+  font-weight: bold;
+}
+#themeToggle {
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00bfff, #1e90ff);
+  color: white;
+  border: 2px solid #fff;
+  box-shadow: 0 0 15px rgba(0, 191, 255, 0.6);
+  font-size: 22px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+#themeToggle:hover {
+  transform: scale(1.1) rotate(10deg);
+  box-shadow: 0 0 25px #00bfff;
+}
+
+@media (max-width: 768px) {
+  #themeToggle {
+    right: 50%;
+    transform: translateX(50%);
+    bottom: 30px;
+  }
+}
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
+  .nav-link {
+  position: relative;
+  padding-bottom: 6px;
+  transition: all 0.3s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background-color: orange;
+  transition: width 0.3s ease;
+}
+
+.nav-link.active::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  color: orange;
+  transform: scale(1.05);
+}
+
 
   </style>
 </head>
@@ -384,6 +578,43 @@
     <h1><span>Ar</span>gi</h1>
     <a href="#" class="nav-link active" data-section="main">Home</a>
     <a href="#" class="nav-link" data-section="about">About</a>
+    <a href="#" class="nav-link" data-section="projects">Projects</a>
+  </div>
+  <div class="section" id="projects" style="flex-direction: column; align-items: center;">
+    <div class="section-header">
+      <h2>🧮 Calculator</h2>
+      <hr />
+    </div>
+  
+       
+        <div class="calculator">
+          <div class="display" id="display">0</div>
+          <div class="buttons">
+            <button class="btn" data-value="7">7</button>
+            <button class="btn" data-value="8">8</button>
+            <button class="btn" data-value="9">9</button>
+            <button class="btn operator" data-value="/">÷</button>
+      
+            <button class="btn" data-value="4">4</button>
+            <button class="btn" data-value="5">5</button>
+            <button class="btn" data-value="6">6</button>
+            <button class="btn operator" data-value="*">×</button>
+      
+            <button class="btn" data-value="1">1</button>
+            <button class="btn" data-value="2">2</button>
+            <button class="btn" data-value="3">3</button>
+            <button class="btn operator" data-value="-">−</button>
+      
+            <button class="btn" data-value="0">0</button>
+            <button class="btn" data-value=".">.</button>
+            <button class="btn" id="clear">C</button>
+            <button class="btn operator" data-value="+">+</button>
+      
+            <button class="btn equals" id="equals">=</button>
+          </div>
+        </div>
+      </div>
+    
     <button id="themeToggle" class="btn logout-btn" title="Toggle Theme">
       <i class="fas fa-moon"></i>
     </button>
@@ -422,91 +653,141 @@
           I’m always eager to learn and evolve, one pixel at a time.
         </p>
       </div>
+      <div style="margin-top: 40px;">
+        <h3 style="color: #00bfff;"><i class="fas fa-stream"></i> My Journey</h3>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-icon"><i class="fas fa-graduation-cap"></i></div>
+            <div class="timeline-content">
+              <h4>BS Information Technology</h4>
+              <small>University of Cebu – Banilad (2020 - 2023)</small>
+              <p>Gained foundational skills in tech and design.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-icon"><i class="fas fa-briefcase"></i></div>
+            <div class="timeline-content">
+              <h4>Freelance Web Designer & Developer</h4>
+              <small>2020 - 2021</small>
+              <p>Handled small client projects and honed HTML/CSS design skills.</p>
+            </div>
+          </div>
+        </div>
+      
+        <div style="margin-top: 40px;">
+          <h3 style="color: #00bfff;"><i class="fas fa-heart"></i> More About Me</h3>
+          <ul style="line-height: 2; color: #bbb; list-style-type: square; padding-left: 20px;">
+            <li><strong>Passionate Learner:</strong> I love exploring new tech and creative tools.</li>
+            <li><strong>Favorite Tools:</strong> Figma, Photoshop, VS Code</li>
+            <li><strong>Creative Fuel:</strong> Music, coffee, late-night coding sprints</li>
+            <li><strong>Fun Fact:</strong> I sometimes sketch design ideas on paper before coding!</li>
+          </ul>
+        </div>
     
-      <div style="margin-top: 30px;">
-        <h3><i class="fas fa-graduation-cap" style="color: #00bfff; text-shadow: 0 0 8px #00bfff;"></i> Education</h3>
-        <table class="info-table glow-box">
-          <thead>
-            <tr>
-              <th><i class="fas fa-calendar"></i> Year</th>
-              <th><i class="fas fa-book-open"></i> Degree</th>
-              <th><i class="fas fa-school"></i> Institute</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="expandable" onclick="toggleRow(this)">
-              <td>2020 - 2023 <i class="fas fa-chevron-down toggle-icon" style="float: right;"></i></td>
-              <td>BS in Information Technology</td>
-              <td>University of Cebu - Banilad</td>
-            </tr>
-            <tr class="collapsible-row">
-              <td colspan="3">ambot testing lang sa.</td>
-            </tr>
-          </tbody>
-        </table>
+        <div style="margin-top: 40px;">
+          <h3 style="color: #00bfff;"><i class="fas fa-tools"></i> Skills</h3>
+          <div style="margin-bottom: 10px;">
+            <p>Web Designer <span class="percent" style="float: right;">0%</span></p>
+            <div class="skill-bar" style="background: #222; border-radius: 20px; height: 12px;">
+              <div data-percent="90" data-sound="ding-126626.mp3" style="width: 90%; height: 100%; background: linear-gradient(to right, #00bfff, #1e90ff); border-radius: 20px; box-shadow: 0 0 10px #00bfff;"></div>
+            </div>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <p>Ms Office <span class="percent" style="float: right;">0%</span></p>
+            <div class="skill-bar" style="background: #222; border-radius: 20px; height: 12px;">
+              <div data-percent="85" data-sound="ding-101492.mp3" style="width: 85%; height: 100%; background: linear-gradient(to right, #00bfff, #1e90ff); border-radius: 20px; box-shadow: 0 0 10px #00bfff;"></div>
+            </div>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <p>TroubleShooting <span class="percent" style="float: right;">0%</span></p>
+            <div class="skill-bar" style="background: #222; border-radius: 20px; height: 12px;">
+              <div data-percent="70" data-sound="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d1e7b3e01d.mp3?filename=correct-2-46134.mp3" style="width: 70%; height: 100%; background: linear-gradient(to right, #00bfff, #1e90ff); border-radius: 20px; box-shadow: 0 0 10px #00bfff;"></div>
+            </div>
+          </div>
+        </div>
+      </div> 
+    <div class="section" id="portfolio">
+      <div class="section-header">
+        <h2>My Work</h2>
+        <hr />
       </div>
-    
-      <div style="margin-top: 30px;">
-        <h3><i class="fas fa-briefcase" style="color: #00bfff; text-shadow: 0 0 8px #00bfff;"></i> Experience</h3>
-        <table class="info-table glow-box">
-          <thead>
-            <tr>
-              <th><i class="fas fa-calendar-alt"></i> Years</th>
-              <th><i class="fas fa-user-tie"></i> Role</th>
-              <th><i class="fas fa-building"></i> Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="expandable" onclick="toggleRow(this)">
-              <td>2020 - 2021 <i class="fas fa-chevron-down toggle-icon" style="float: right;"></i></td>
-              <td>Web Designer & Developer</td>
-              <td>Freelance</td>
-            </tr>
-            <tr class="collapsible-row">
-              <td colspan="3">kaya pa.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    
-      <div style="margin-top: 30px;">
-        <h3><i class="fas fa-tools" style="color: #00bfff; text-shadow: 0 0 8px #00bfff;"></i> Skills</h3>
-        <div style="margin-bottom: 10px;">
-          <p>Web Designer <span style="float: right;">90%</span></p>
-          <div style="background: #222; border-radius: 20px; height: 12px;">
-            <div style="width: 90%; height: 100%; background: linear-gradient(to right, #00bfff, #1e90ff); border-radius: 20px; box-shadow: 0 0 10px #00bfff;"></div>
-          </div>
-        </div>
-        <div style="margin-bottom: 10px;">
-          <p>Ms Office <span style="float: right;">88%</span></p>
-          <div style="background: #222; border-radius: 20px; height: 12px;">
-            <div style="width: 85%; height: 100%; background: linear-gradient(to right, #00bfff, #1e90ff); border-radius: 20px; box-shadow: 0 0 10px #00bfff;"></div>
-          </div>
-        </div>
-        <div style="margin-bottom: 10px;">
-          <p>TroubleShooting <span style="float: right;">85%</span></p>
-          <div style="background: #222; border-radius: 20px; height: 12px;">
-            <div style="width: 70%; height: 100%; background: linear-gradient(to right, #00bfff, #1e90ff); border-radius: 20px; box-shadow: 0 0 10px #00bfff;"></div>
-          </div>
-        </div>
+      <div class="portfolio-slider">
+        <div class="slide"><img src="placeholder1.jpg" alt="Project 1" /></div>
+        <div class="slide"><img src="placeholder2.jpg" alt="Project 2" /></div>
+        <div class="slide"><img src="placeholder3.jpg" alt="Project 3" /></div>
       </div>
     </div>
-
+      <div style="margin-top: 40px;">
+        <details class="glow-box" style="padding: 20px; border-radius: 12px;">
+          <summary style="font-size: 18px; color: #00bfff; cursor: pointer;">
+            <i class="fas fa-info-circle"></i> More About Me
+          </summary>
+          <div style="margin-top: 15px; color: #bbb; line-height: 1.8;">
+            <p><strong>🌍 Languages:</strong> English, Cebuano, Tagalog</p>
+            <p><strong>🎨 Hobbies:</strong> Digital Art, Gaming, UI/UX exploration</p>
+            <p><strong>💪 Strengths:</strong> Creative, Detail-Oriented, Quick Learner</p>
+            <p><strong>📍 Based in:</strong> Cebu, Philippines</p>
+            <p><strong>🔗 Links:</strong> 
+              <a href="#" style="color:#00bfff;">Portfolio</a> | 
+              <a href="#" style="color:#00bfff;">Tiktok</a> | 
+              <a href="#" style="color:#00bfff;">Facebook</a>
+            </p>
+          </div>
+        </details>
+      </div>
+    </div> <!-- Section Body End -->
+    <div class="section-footer" style="margin-top: 40px; text-align: center;">
+      <p style="color: #bbb;">&copy; 2025 Argi Sumaylo. All rights reserved.</p>      
+    </div>
   <script>
+    // Calculator logic
+    const display = document.getElementById("display");
+    const buttons = document.querySelectorAll(".btn");
+    const equals = document.getElementById("equals");
+    const clear = document.getElementById("clear");
+    let currentInput = "";
+
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        const value = button.getAttribute("data-value");
+        if (value) {
+          if (display.textContent === "0" || display.textContent === "Error") {
+            currentInput = value;
+          } else {
+            currentInput += value;
+          }
+          display.textContent = currentInput;
+        }
+      });
+    });
+
+    equals.addEventListener("click", () => {
+      try {
+        const result = eval(currentInput);
+        display.textContent = result;
+        currentInput = result.toString();
+      } catch {
+        display.textContent = "Error";
+        currentInput = "";
+      }
+    });
+
+    clear.addEventListener("click", () => {
+      currentInput = "";
+      display.textContent = "0";
+    });
     const navLinks = document.querySelectorAll('.nav-link');
-    const mainSection = document.getElementById('main');
     const sections = document.querySelectorAll('.section');
+    const mainSection = document.getElementById('main');
 
     navLinks.forEach(link => {
       link.addEventListener('click', function (e) {
         e.preventDefault();
         navLinks.forEach(nav => nav.classList.remove('active'));
         this.classList.add('active');
-
         const target = this.getAttribute('data-section');
         mainSection.classList.remove('active');
         sections.forEach(sec => sec.classList.remove('active'));
-
         if (target === 'main') {
           mainSection.classList.add('active');
         } else {
@@ -537,8 +818,7 @@
 
     const icon = row.querySelector('.toggle-icon');
 
-    if (nextRow.classList.contains("show")) {
-      nextRow.classList.remove("show");
+    if (nextRow.classList.toggle("show")) {
       icon.classList.remove("rotated");
     } else {
       nextRow.classList.add("show");
@@ -555,7 +835,7 @@
 
     icon.addEventListener("click", function (e) {
       e.stopPropagation(); // Prevent event bubbling
-      if (nextRow && nextRow.classList.contains("collapsible-row")) {
+      if (nextRow && nextRow.classList.contains("collapsible-row" )) {
         nextRow.classList.toggle("show");
         icon.classList.toggle("rotated");
       }
@@ -565,5 +845,32 @@
 </script>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+  <script>
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+  
+        // Remove active class from all links
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  
+        // Add active class to clicked link
+        this.classList.add('active');
+  
+        // Hide all sections
+        document.querySelectorAll('.main, .section').forEach(sec => sec.classList.remove('active'));
+  
+        // Show selected section
+        const sectionId = this.getAttribute('data-section');
+        const section = document.getElementById(sectionId);
+        if (section) {
+          section.classList.add('active');
+        }
+      });
+    });
+  
+    // Default: show home
+    document.getElementById('main')?.classList.add('active');
+  </script>
+  
 </body>
 </html>
