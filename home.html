@@ -14,7 +14,7 @@
     body {  
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #111;
+      background-color: #111; 
       color: #fff;
       display: flex;
       flex-direction: row;
@@ -49,7 +49,7 @@
     }
 
     body.light-mode .sidebar h1 {
-      color: #222;
+      color: #222;  
     }
 
     .sidebar h1 span {
@@ -87,7 +87,6 @@
       justify-content: space-between;
       align-items: center;
       position: relative;
-      animation: slideIn 0.5s ease;
     }
 
     .main.active,
@@ -96,6 +95,19 @@
       opacity: 1 !important;
       transform: translateY(0);
       pointer-events: auto;
+    }
+
+    #gameCanvas{
+      border: 2px solid #00bfff;
+      background-color: #222;
+      margin-top: 20px;
+    }
+
+    #score{
+      margin-top: 10px;
+      text-align: center;
+      font-size: 18px;
+      color: #00bfff;
     }
 
     .section-header{
@@ -158,20 +170,12 @@
         flex-direction: column;
         align-items: center;
       }
-      .sidebar {
-        width: 100%;
-        height: auto;
-        flex-direction: row;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        gap: 10px;
-        padding: 10px;
-      }
       .main, .section {
         padding: 20px;
         width: 100%;
       }
     }
+
     .intro {
       max-width: 600px;
     }
@@ -333,244 +337,122 @@
         right: 20px;
       }
     }
-    .info-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    animation: fadeIn 0.5s ease;
-  }
 
-  .info-table th{
-  background-color: #222;
-  color: #00bfff;
-  text-shadow: 0 0 6px #00bfff;
-  transition: all 0.3s ease;
-  }
-  .info-table td {
-    border: 1px solid #555;
-    padding: 12px 10px;
-    text-align: left;
-    color: #ccc;
-    cursor: default;
-  }
-  body.light-mode .info-table th,
-  body.light-mode .info-table td {
-    border-color: #ddd;
-    color: #333;
-  }
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .info-table th {
+      background-color: #222;
+      color: #00bfff;
+      text-shadow: 0 0 6px #00bfff;
+      transition: all 0.3s ease;
+    }
+
+    .info-table td {
+      border: 1px solid #555;
+      padding: 12px 10px;
+      text-align: left;
+      color: #ccc;
+      cursor: default;
+    }
+
+    body.light-mode .info-table th,
+    body.light-mode .info-table td {
+      border-color: #ddd;
+      color: #333;
+    }
 
     .info-table th {
       background-color: #222;
       color: orange;
-    } 
+    }
 
-  body.light-mode .info-table th {
-    background-color: #f9f9f9;
-    color: orange;
-  }
+    body.light-mode .info-table th {
+      background-color: #f9f9f9;
+      color: orange;
+    }
 
+    .info-table tr.expandable {
+      cursor: pointer;
+      transition: background 0.3s;
+    }
 
-  .info-table tr.expandable {
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-
-  .info-table tr.expandable:hover {
-    background-color: #222;
-
+    .info-table tr.expandable:hover {
+      background-color: #222;
+    }
 
     .info-table th {
-    background-color: #222;
-    color: #00bfff;
-    text-shadow: 0 0 6px #00bfff;
-    transition: all 0.3s ease;
-  }
+      background-color: #222;
+      color: #00bfff;
+      text-shadow: 0 0 6px #00bfff;
+      transition: all 0.3s ease;
+    }
 
-  .btn, .nav-link {
-    transition: all 0.3s ease;
-  }
+    .btn,
+    .nav-link {
+      transition: all 0.3s ease;
+    }
 
-  .btn:hover,
-  .nav-link:hover,
-  .nav-link.active {
-    color: #00bfff !important;
-    text-shadow: 0 0 10px #00bfff;
-  }
+    .btn:hover,
+    .nav-link:hover,
+    .nav-link.active {
+      color: #00bfff !important;
+      text-shadow: 0 0 10px #00bfff;
+    }
 
-  .corner {
-    border-color: #00bfff;
-    box-shadow: 0 0 10px #00bfff;
-  }
+    .corner {
+      border-color: #00bfff;
+      box-shadow: 0 0 10px #00bfff;
+    }
 
-  .toggle-icon {
-    float: right;
-    transition: transform 0.3s ease, color 0.3s ease;
-    color: #bbb;
-    cursor: pointer;
-  }
+    .toggle-icon {
+      float: right;
+      transition: transform 0.3s ease, color 0.3s ease;
+      color: #bbb;
+      cursor: pointer;
+    }
 
-  .expandable:hover .toggle-icon {
-    color: #00bfff;
-    text-shadow: 0 0 5px #00bfff;
-  }
+    .expandable:hover .toggle-icon {
+      color: #00bfff;
+      text-shadow: 0 0 5px #00bfff;
+    }
 
-  .expandable:hover {
-    background-color: #1a1a1a;
-    box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
-  }
+    .expandable:hover {
+      background-color: #1a1a1a;
+      box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+    }
 
-  .rotated {
-    transform: rotate(180deg);
-  }
+    .rotated {
+      transform: rotate(180deg);
+    }
 
-  .collapsible-row {
-  display: none;
-  opacity: 0;
-  transition: all 0.4s ease;
-  }
+    .collapsible-row {
+      display: none;
+      opacity: 0;
+      transition: all 0.4s ease;
+    }
 
-  .collapsible-row.show {
-  display: table-row;
-  opacity: 1;
-  }
+    .collapsible-row.show {
+      display: table-row;
+      opacity: 1;
+    }
 
-  .collapsible-row td {
-    background-color: #111;
-    color: #ccc;
-    box-shadow: inset 0 0 5px #00bfff;
-  }
+    .collapsible-row td {
+      background-color: #111;
+      color: #ccc;
+      box-shadow: inset 0 0 5px #00bfff;
+    }
 
-  .glow-box {
-    border: 1px solid #00bfff;
-    box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
-    border-radius: 10px;
-    transition: box-shadow 0.4s ease;
-  }
-  }
-
-  body.light-mode .info-table tr.expandable:hover {
-    background-color: #eee;
-  }
-  .calculator {
-  background: rgba(0, 0, 0, 0.75);
-  border: 2px solid #0ff;
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 0 20px #0ff, 0 0 60px #00f;
-  width: 320px;
-  margin: 0 auto;
-}
-
-.display {
-  background: #111;
-  color: #0ff;
-  font-size: 2rem;
-  padding: 20px;
-  text-align: right;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  border: 1px solid #00f;
-  box-shadow: inset 0 0 10px #0ff;
-}
-
-.buttons {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-}
-
-.btn {
-  padding: 20px;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 10px;
-  background: #111;
-  color: #0ff;
-  box-shadow: 0 0 8px #00f;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.3s;
-}
-
-.btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px #0ff;
-}
-
-.operator {
-  background: linear-gradient(45deg, #0ff, #00f);
-  color: #000;
-  font-weight: bold;
-}
-
-.equals {
-  grid-column: span 4;
-  background: #0ff;
-  color: #000;
-  font-weight: bold;
-}
-#themeToggle {
-  position: fixed;
-  bottom: 40px;
-  right: 20px;
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #00bfff, #1e90ff);
-  color: white;
-  border: 2px solid #fff;
-  box-shadow: 0 0 15px rgba(0, 191, 255, 0.6);
-  font-size: 22px;
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-#themeToggle:hover {
-  transform: scale(1.1) rotate(10deg);
-  box-shadow: 0 0 25px #00bfff;
-}
-
-@media (max-width: 768px) {
-  #themeToggle {
-    right: 50%;
-    transform: translateX(50%);
-    bottom: 30px;
-  }
-}
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .nav-link {
-  position: relative;
-  padding-bottom: 6px;
-  transition: all 0.3s ease;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0%;
-  height: 2px;
-  background-color: orange;
-  transition: width 0.3s ease;
-}
-
-.nav-link.active::after {
-  width: 100%;
-}
-
-.nav-link.active {
-  color: orange;
-  transform: scale(1.05);
-}
-
-
+    .glow-box {
+      border: 1px solid #00bfff;
+      box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
+      border-radius: 10px;
+      transition: box-shadow 0.4s ease;
+    }
   </style>
 </head>
 <body>
@@ -580,51 +462,52 @@
     <a href="#" class="nav-link" data-section="about">About</a>
     <a href="#" class="nav-link" data-section="projects">Projects</a>
   </div>
-  <div class="section" id="projects" style="flex-direction: column; align-items: center;">
+  <div class="section" id="projects">
     <div class="section-header">
       <h2>🧮 Calculator</h2>
       <hr />
     </div>
-  
-       
-        <div class="calculator">
-          <div class="display" id="display">0</div>
-          <div class="buttons">
-            <button class="btn" data-value="7">7</button>
-            <button class="btn" data-value="8">8</button>
-            <button class="btn" data-value="9">9</button>
-            <button class="btn operator" data-value="/">÷</button>
-      
-            <button class="btn" data-value="4">4</button>
-            <button class="btn" data-value="5">5</button>
-            <button class="btn" data-value="6">6</button>
-            <button class="btn operator" data-value="*">×</button>
-      
-            <button class="btn" data-value="1">1</button>
-            <button class="btn" data-value="2">2</button>
-            <button class="btn" data-value="3">3</button>
-            <button class="btn operator" data-value="-">−</button>
-      
-            <button class="btn" data-value="0">0</button>
-            <button class="btn" data-value=".">.</button>
-            <button class="btn" id="clear">C</button>
-            <button class="btn operator" data-value="+">+</button>
-      
-            <button class="btn equals" id="equals">=</button>
-          </div>
-        </div>
+    <div class="calculator">
+      <div class="display" id="display">0</div>
+      <div class="buttons">
+        <button class="btn" data-value="7">7</button>
+        <button class="btn" data-value="8">8</button>
+        <button class="btn" data-value="9">9</button>
+        <button class="btn operator" data-value="/">÷</button>
+
+        <button class="btn" data-value="4">4</button>
+        <button class="btn" data-value="5">5</button>
+        <button class="btn" data-value="6">6</button>
+        <button class="btn operator" data-value="*">×</button>
+
+        <button class="btn" data-value="1">1</button>
+        <button class="btn" data-value="2">2</button>
+        <button class="btn" data-value="3">3</button>
+        <button class="btn operator" data-value="-">−</button>
+
+        <button class="btn" data-value="0">0</button>
+        <button class="btn" data-value=".">.</button>
+        <button class="btn" id="clear">C</button>
+        <button class="btn operator" data-value="+">+</button>
+
+        <button class="btn equals" id="equals">=</button>
       </div>
-    
-    <button id="themeToggle" class="btn logout-btn" title="Toggle Theme">
-      <i class="fas fa-moon"></i>
-    </button>
+    </div>
+    <div style="text-align: center;">
+      <h3>Snake Game</h3>
+      <button id="startButton" class="btn">Start Game</button>
+      <canvas id="gameCanvas" width="400" height="400"></canvas>
+      <div id="score">Score: 0</div>
+    </div>
+  </div>
+
+  <button id="themeToggle" class="btn logout-btn" title="Toggle Theme">
+    <i class="fas fa-moon"></i>
+  </button>
     <button onclick="logout()" class="btn logout-btn" title="Logout">
       <i class="fas fa-power-off"></i>
     </button>
   </div>
-
-  
-
   <div class="main active" id="main">
     <div class="intro">
       <h2>Hello, my name is <span style="color: orange;">Argi Sumaylo</span></h2>
@@ -673,48 +556,46 @@
             </div>
           </div>
         </div>
+        <div class="section-body">
+          <div style="margin-bottom: 10px;">
+            <p>Web Designer <span class="percent" style="float: right;">0%</span></p>
+            <div class="skill-bar">
+              <div class="skill-fill" data-percent="90"></div>
+            </div>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <p>Ms Office <span class="percent" style="float: right;">0%</span></p>
+            <div class="skill-bar">
+              <div class="skill-fill" data-percent="85"></div>
+            </div>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <p>TroubleShooting <span class="percent" style="float: right;">0%</span></p>
+            <div class="skill-bar">
+              <div class="skill-fill" data-percent="70"></div>
+            </div>
+          </div>
+        </div>
+      </div>
       
         <div style="margin-top: 40px;">
           <h3 style="color: #00bfff;"><i class="fas fa-heart"></i> More About Me</h3>
           <ul style="line-height: 2; color: #bbb; list-style-type: square; padding-left: 20px;">
             <li><strong>Passionate Learner:</strong> I love exploring new tech and creative tools.</li>
             <li><strong>Favorite Tools:</strong> Figma, Photoshop, VS Code</li>
-            <li><strong>Creative Fuel:</strong> Music, coffee, late-night coding sprints</li>
-            <li><strong>Fun Fact:</strong> I sometimes sketch design ideas on paper before coding!</li>
+            <li><strong>Creative Fuel: </strong> Music, coffee, late-night coding sprints</li>
+            <li><strong>Fun Fact:      </strong> I sometimes sketch design ideas on paper before coding!</li>
           </ul>
         </div>
-    
-        <div style="margin-top: 40px;">
-          <h3 style="color: #00bfff;"><i class="fas fa-tools"></i> Skills</h3>
-          <div style="margin-bottom: 10px;">
-            <p>Web Designer <span class="percent" style="float: right;">0%</span></p>
-            <div class="skill-bar" style="background: #222; border-radius: 20px; height: 12px;">
-              <div data-percent="90" data-sound="ding-126626.mp3" style="width: 90%; height: 100%; background: linear-gradient(to right, #00bfff, #1e90ff); border-radius: 20px; box-shadow: 0 0 10px #00bfff;"></div>
-            </div>
-          </div>
-          <div style="margin-bottom: 10px;">
-            <p>Ms Office <span class="percent" style="float: right;">0%</span></p>
-            <div class="skill-bar" style="background: #222; border-radius: 20px; height: 12px;">
-              <div data-percent="85" data-sound="ding-101492.mp3" style="width: 85%; height: 100%; background: linear-gradient(to right, #00bfff, #1e90ff); border-radius: 20px; box-shadow: 0 0 10px #00bfff;"></div>
-            </div>
-          </div>
-          <div style="margin-bottom: 10px;">
-            <p>TroubleShooting <span class="percent" style="float: right;">0%</span></p>
-            <div class="skill-bar" style="background: #222; border-radius: 20px; height: 12px;">
-              <div data-percent="70" data-sound="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d1e7b3e01d.mp3?filename=correct-2-46134.mp3" style="width: 70%; height: 100%; background: linear-gradient(to right, #00bfff, #1e90ff); border-radius: 20px; box-shadow: 0 0 10px #00bfff;"></div>
-            </div>
-          </div>
-        </div>
-      </div> 
     <div class="section" id="portfolio">
       <div class="section-header">
         <h2>My Work</h2>
         <hr />
       </div>
       <div class="portfolio-slider">
-        <div class="slide"><img src="placeholder1.jpg" alt="Project 1" /></div>
-        <div class="slide"><img src="placeholder2.jpg" alt="Project 2" /></div>
-        <div class="slide"><img src="placeholder3.jpg" alt="Project 3" /></div>
+        <div class="slide"><img src="test.jpg" alt="Project 1" /></div>
+        <div class="slide"><img src="bh2.png" alt="Project 2" /></div>
+        <div class="slide"><img src="12.png" alt="Project 3" /></div>
       </div>
     </div>
       <div style="margin-top: 40px;">
@@ -739,138 +620,287 @@
     <div class="section-footer" style="margin-top: 40px; text-align: center;">
       <p style="color: #bbb;">&copy; 2025 Argi Sumaylo. All rights reserved.</p>      
     </div>
-  <script>
-    // Calculator logic
-    const display = document.getElementById("display");
-    const buttons = document.querySelectorAll(".btn");
-    const equals = document.getElementById("equals");
-    const clear = document.getElementById("clear");
-    let currentInput = "";
-
-    buttons.forEach(button => {
-      button.addEventListener("click", () => {
-        const value = button.getAttribute("data-value");
-        if (value) {
-          if (display.textContent === "0" || display.textContent === "Error") {
-            currentInput = value;
-          } else {
-            currentInput += value;
+    <script>
+      // Calculator logic
+      const display = document.getElementById("display");
+      const buttons = document.querySelectorAll(".btn");
+      const equals = document.getElementById("equals");
+      const clear = document.getElementById("clear");
+      let currentInput = "";
+  
+      buttons.forEach(button => {
+        button.addEventListener("click", () => {
+          const value = button.getAttribute("data-value");
+          if (value) {
+            if (display.textContent === "0" || display.textContent === "Error") {
+              currentInput = value;
+            } else {
+              currentInput += value;
+            }
+            display.textContent = currentInput;
           }
-          display.textContent = currentInput;
+        });
+      });
+      equals.addEventListener("click", () => {
+        try {
+          const result = eval(currentInput);
+          display.textContent = result;
+          currentInput = result.toString();
+        } catch {
+          display.textContent = "Error";
+          currentInput = "";
         }
       });
-    });
-
-    equals.addEventListener("click", () => {
-      try {
-        const result = eval(currentInput);
-        display.textContent = result;
-        currentInput = result.toString();
-      } catch {
-        display.textContent = "Error";
+  
+      clear.addEventListener("click", () => {
         currentInput = "";
+        display.textContent = "0";
+      });
+      // Snake Game Code
+      const canvas = document.getElementById('gameCanvas');
+      const ctx = canvas.getContext('2d');
+      const grid = 20;
+      let count = 0;
+      let score = 0;
+      let snake = [
+        { x: 9 * grid, y: 9 * grid },
+        { x: 8 * grid, y: 9 * grid },
+        { x: 7 * grid, y: 9 * grid },
+      ];
+      let direction = 'RIGHT';
+      let food = { x: 0, y: 0 };
+  
+      function gameLoop() {
+        requestAnimationFrame(gameLoop);
+        if (++count < 4) return;
+        count = 0;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        moveSnake();
+        checkCollision();
+        drawFood();
+        drawSnake();
+        updateScore();
       }
-    });
-
-    clear.addEventListener("click", () => {
-      currentInput = "";
-      display.textContent = "0";
-    });
-    const navLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('.section');
-    const mainSection = document.getElementById('main');
-
-    navLinks.forEach(link => {
-      link.addEventListener('click', function (e) {
-        e.preventDefault();
-        navLinks.forEach(nav => nav.classList.remove('active'));
-        this.classList.add('active');
-        const target = this.getAttribute('data-section');
-        mainSection.classList.remove('active');
-        sections.forEach(sec => sec.classList.remove('active'));
-        if (target === 'main') {
-          mainSection.classList.add('active');
+  
+      function drawSnake() {
+        snake.forEach((segment, index) => {
+          ctx.fillStyle = index === 0 ? '#00bfff' : '#fff';
+          ctx.fillRect(segment.x, segment.y, grid, grid);
+        });
+      }
+  
+      function moveSnake() {
+        const head = { ...snake[0] };
+        if (direction === 'UP') head.y -= grid;
+        if (direction === 'DOWN') head.y += grid;
+        if (direction === 'LEFT') head.x -= grid;
+        if (direction === 'RIGHT') head.x += grid;
+        snake.unshift(head);
+        if (head.x === food.x && head.y === food.y) {
+          score += 10;
+          placeFood();
         } else {
-          document.getElementById(target).classList.add('active');
+          snake.pop();
         }
-      });
-    });
-
-    document.getElementById('moreAboutBtn').addEventListener('click', function (e) {
-      e.preventDefault();
-      document.querySelector('[data-section="about"]').click();
-    });
-
-    document.getElementById('themeToggle').addEventListener('click', () => {
-      document.body.classList.toggle('light-mode');
-      const icon = document.querySelector('#themeToggle i');
-      icon.classList.toggle('fa-moon');
-      icon.classList.toggle('fa-sun');
-    });
-
-    function logout() {
-      window.location.href = "index.html";
-    }
-
-    function toggleRow(row) {
-    const nextRow = row.nextElementSibling;
-    if (!nextRow || !nextRow.classList.contains('collapsible-row')) return;
-
-    const icon = row.querySelector('.toggle-icon');
-
-    if (nextRow.classList.toggle("show")) {
-      icon.classList.remove("rotated");
-    } else {
-      nextRow.classList.add("show");
-      icon.classList.add("rotated");
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-  const expandableRows = document.querySelectorAll(".expandable");
-
-  expandableRows.forEach((row) => {
-    const icon = row.querySelector(".toggle-icon");
-    const nextRow = row.nextElementSibling;
-
-    icon.addEventListener("click", function (e) {
-      e.stopPropagation(); // Prevent event bubbling
-      if (nextRow && nextRow.classList.contains("collapsible-row" )) {
-        nextRow.classList.toggle("show");
-        icon.classList.toggle("rotated");
       }
-    });
-  });
-  });
-</script>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
-  <script>
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', function (e) {
-        e.preventDefault();
   
-        // Remove active class from all links
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      function drawFood() {
+        ctx.fillStyle = '#ff6347';
+        ctx.fillRect(food.x, food.y, grid, grid);
+      }
   
-        // Add active class to clicked link
-        this.classList.add('active');
+      function placeFood() {
+        food = {
+          x: Math.floor(Math.random() * (canvas.width / grid)) * grid,
+          y: Math.floor(Math.random() * (canvas.height / grid)) * grid,
+        };
+      }
   
-        // Hide all sections
-        document.querySelectorAll('.main, .section').forEach(sec => sec.classList.remove('active'));
-  
-        // Show selected section
-        const sectionId = this.getAttribute('data-section');
-        const section = document.getElementById(sectionId);
-        if (section) {
-          section.classList.add('active');
+      function checkCollision() {
+        const head = snake[0];
+        if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
+          resetGame();
         }
+        for (let i = 1; i < snake.length; i++) {
+          if (head.x === snake[i].x && head.y === snake[i].y) {
+            resetGame();
+          }
+        }
+      }
+      let gameOver = false; // Add a flag to track if the game is over
+  
+  // Function to start the game when the button is clicked
+  function startGame() {
+  if (gameOver) {  // Check if the game is already over
+    gameOver = false;
+      snake = [
+        { x: 9 * grid, y: 9 * grid },
+        { x: 8 * grid, y: 9 * grid },
+        { x: 7 * grid, y: 9 * grid },
+      ];
+      direction = 'RIGHT';
+      score = 0;
+      placeFood();
+    }
+  
+  
+    // Hide the start button when the game starts
+    document.getElementById('startButton').style.display = 'none';
+  
+    // Start the game loop
+    gameLoop();
+  }
+  
+  function resetGame() {
+    if (!gameOver) {  // Check if the game is already over
+      alert('Game Over!');
+      gameOver = true;  // Set the gameOver flag to true
+    }
+  
+    // Reset the snake position and game state
+    snake = [
+      { x: 9 * grid, y: 9 * grid },
+      { x: 8 * grid, y: 9 * grid },
+      { x: 7 * grid, y: 9 * grid },
+    ];
+    direction = 'RIGHT';
+    score = 0;
+    placeFood();
+  
+    // Show the start button after a delay
+    setTimeout(() => {
+      document.getElementById('startButton').style.display = 'inline-block';
+    }, 1000);  // Delay before showing the start button again
+  }
+  
+  // Prevent the game from continuing after Game Over
+  function gameLoop() {
+    if (gameOver) return; // Stop the game loop if the game is over
+  
+    requestAnimationFrame(gameLoop);
+    if (++count < 4) return;
+    count = 0;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    moveSnake();
+    checkCollision();  
+    drawFood();
+    drawSnake();
+    updateScore();
+  }
+  
+  document.getElementById('startButton').addEventListener('click', startGame);
+  
+  
+  function updateScore() {
+    document.getElementById('score').textContent = `Score: ${score}`; // Corrected string interpolation
+  }
+  
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowUp' && direction !== 'DOWN') {
+      direction = 'UP';
+    }
+    if (event.key === 'ArrowDown' && direction !== 'UP') {
+      direction = 'DOWN';
+    }
+    if (event.key === 'ArrowLeft' && direction !== 'RIGHT') {
+      direction = 'LEFT';
+    }
+    if (event.key === 'ArrowRight' && direction !== 'LEFT') {
+      direction = 'RIGHT';
+    }
+  });
+  
+  
+      placeFood();
+      gameLoop();
+      const navLinks = document.querySelectorAll('.nav-link');
+      const sections = document.querySelectorAll('.section');
+      const mainSection = document.getElementById('main');
+  
+      navLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          navLinks.forEach(nav => nav.classList.remove('active'));
+          this.classList.add('active');
+          const target = this.getAttribute('data-section');
+          mainSection.classList.remove('active');
+          sections.forEach(sec => sec.classList.remove('active'));
+          if (target === 'main') {
+            mainSection.classList.add('active');
+          } else {
+            document.getElementById(target).classList.add('active');
+          }
+        });
       });
-    });
   
-    // Default: show home
-    document.getElementById('main')?.classList.add('active');
+      document.getElementById('moreAboutBtn').addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector('[data-section="about"]').click();
+      });
+  
+      document.getElementById('themeToggle').addEventListener('click', () => {
+        document.body.classList.toggle('light-mode');
+        const icon = document.querySelector('#themeToggle i');
+        icon.classList.toggle('fa-moon');
+        icon.classList.toggle('fa-sun');
+      });
+  
+      function logout() {
+        window.location.href = "index.html";
+      }
+  
+      function toggleRow(row) {
+      const nextRow = row.nextElementSibling;
+      if (!nextRow || !nextRow.classList.contains('collapsible-row')) return;
+  
+      const icon = row.querySelector('.toggle-icon');
+  
+      if (nextRow.classList.toggle("show")) {
+        icon.classList.remove("rotated");
+      } else {
+        nextRow.classList.add("show");
+        icon.classList.add("rotated");
+      }
+    }
+  
+    document.addEventListener("DOMContentLoaded", function () {
+        const skillFills = document.querySelectorAll(".skill-fill");
+  
+        const animateSkills = () => {
+          skillFills.forEach(fill => {
+            const target = parseInt(fill.getAttribute("data-percent"));
+            const percentText = fill.closest(".skill-bar").previousElementSibling.querySelector(".percent");
+            let current = 0;
+  
+            // Ensure the width starts from 0
+            fill.style.width = '0%';
+              
+            const interval = setInterval(() => {
+              if (current >= target) {
+                clearInterval(interval);
+              } else {  
+                current++;
+                fill.style.width = `${current}%`;
+                percentText.textContent = `${current}%`;
+              }
+            }, 10); // Faster interval for smoother animation
+          });
+        };
+  
+        // Use IntersectionObserver to trigger the skill bar animation when the About section is in view
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              animateSkills();
+              observer.disconnect(); // Stop observing once skills have animated
+            }
+          });
+        }, { threshold: 0.3 }); // Trigger animation when 30% of the section is visible
+  
+        // Start observing the "About" section
+        observer.observe(document.getElementById("about"));
+      });
   </script>
-  
+  </div>
 </body>
 </html>
