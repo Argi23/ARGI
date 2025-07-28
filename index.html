@@ -162,7 +162,7 @@
   </form>
 </div>
 
-<audio id="successSound" src="https://www.myinstants.com/media/sounds/success-fanfare.mp3"></audio>
+<audio id="successSound" src="yay-6120.mp3"></audio>
 <audio id="failSound" src="https://www.myinstants.com/media/sounds/error.mp3"></audio>
 
 <script>
@@ -182,7 +182,7 @@
       message.textContent = 'Login successful!';
       const container = document.querySelector('.login-container');
       container.classList.add('fade-out');
-      setTimeout(() => window.location.href = "home.html", 1000);
+      setTimeout(() => window.location.href = "home.html", 1000);   
     } else {
       failSound.play();
       message.style.color = '#f44336';
@@ -219,15 +219,14 @@
     }
   };
 
-  Particle.prototype.draw = function() {
-    ctx.beginPath();
+  Particle.prototype.draw = function() {  
+        ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fillStyle = 'rgba(0, 255, 255, 0.7)';
     ctx.fill();
   };
 
-  function initParticles(count) {
-    for (let i = 0; i < count; i++) {
+  function initParticles(count) {   for (let i = 0; i < count; i++) {
       particles.push(new Particle());
     }
   }
