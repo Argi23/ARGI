@@ -2,247 +2,776 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Argi Test Login</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Argi's Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    html, body {
-      height: 100%;
-      font-family: 'Orbitron', sans-serif;
-      background: radial-gradient(ellipse at center, #0f0f0f 0%, #000000 100%);
-      overflow: hidden;
+  <style>
+    /* --- [All your styles remain unchanged] --- */
+    * { box-sizing: border-box; }
+    body {  
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #111; 
       color: #fff;
       display: flex;
-      justify-content: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+      animation: slideIn 0.6s ease;
+    }
+    .light-mode { background-color: #f2f2f2; color: #222; }
+    .sidebar {
+      background-color: #1e1e1e;
+      width: 220px;
+      height: 100vh;
+      padding: 20px 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
       align-items: center;
     }
-
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 0;
-    }
-
-    .login-container {
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(10px);
-      padding: 40px;
-      border-radius: 16px;
+    body.light-mode .sidebar { background-color: #fff; }
+    .sidebar h1 { font-size: 24px; color: #fff; margin-bottom: 40px; }
+    body.light-mode .sidebar h1 { color: #222; }
+    .sidebar h1 span { color: orange; }
+    .nav-link { color: #ccc; text-decoration: none; margin: 10px 0; display: flex; align-items: center; font-size: 16px; transition: color 0.3s ease; }
+    .nav-link:hover, .nav-link.active { color: orange; }
+    body.light-mode .nav-link { color: #333; }
+    body.light-mode .nav-link.active { color: orange; }
+    .main, .section { flex: 1; padding: 40px; display: none; justify-content: space-between; align-items: center; position: relative; }
+    .main.active, .section.active { display: flex; opacity: 1 !important; transform: translateY(0); pointer-events: auto; }
+    #gameCanvas{ border: 2px solid #00bfff; background-color: #222; margin-top: 20px; }
+    #score{ margin-top: 10px; text-align: center; font-size: 18px; color: #00bfff; }
+    .section-header{ text-align: center; }
+    .calculator {
+      background: rgba(0, 0, 0, 0.75);
       border: 2px solid #0ff;
+      border-radius: 20px;
+      padding: 20px;
       box-shadow: 0 0 20px #0ff, 0 0 60px #00f;
       width: 100%;
-      max-width: 420px;
-      z-index: 2;
-      animation: glowFadeIn 2s ease forwards;
-      text-align: center;
+      max-width: 340px;
+      margin: 20px auto;
     }
-
-    .logo {
-      width: 80px;
-      height: 80px;
-      margin-bottom: 15px;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); filter: drop-shadow(0 0 5px #0ff); }
-      50% { transform: scale(1.1); filter: drop-shadow(0 0 20px #0ff); }
-      100% { transform: scale(1); filter: drop-shadow(0 0 5px #0ff); }
-    }
-
-    h2 {
-      font-size: 28px;
+    .display {
+      background: #111;
       color: #0ff;
-      text-shadow: 0 0 10px #0ff, 0 0 20px #00f;
-    }
-
-    .form-group {
-      margin: 20px 0;
-      text-align: left;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: #ccc;
-    }
-
-    input[type="text"],
-    input[type="password"] {
-      width: 100%;
-      padding: 14px;
+      font-size: 2rem;
+      padding: 20px;
+      text-align: right;
+      border-radius: 12px;
+      margin-bottom: 20px;
       border: 1px solid #00f;
-      border-radius: 8px;
-      background-color: #111;
-      color: #0ff;
-      outline: none;
-      transition: box-shadow 0.3s ease;
+      box-shadow: inset 0 0 10px #0ff;
     }
-
-    input:focus {
-      box-shadow: 0 0 10px #0ff, 0 0 20px #00f;
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
     }
-
     .btn {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(45deg, #00f, #0ff);
+      padding: 20px;
+      font-size: 1.2rem;
       border: none;
-      border-radius: 8px;
-      color: #fff;
-      font-size: 16px;
+      border-radius: 10px;
+      background: #111;
+      color: #0ff;
+      box-shadow: 0 0 8px #00f;
       cursor: pointer;
-      text-shadow: 0 0 5px #fff;
-      transition: transform 0.3s, box-shadow 0.3s;
     }
-
     .btn:hover {
       transform: scale(1.05);
       box-shadow: 0 0 15px #0ff;
     }
-
-    .message {
-      text-align: center;
-      margin-top: 15px;
+    .operator {
+      background: linear-gradient(45deg, #0ff, #00f);
+      color: #000;
       font-weight: bold;
     }
-
-    .fade-out {
-      animation: fadeOut 1s forwards;
+    .equals {
+      grid-column: span 4;
+      background: #0ff;
+      color: #000;
+      font-weight: bold;
     }
-
-    @keyframes fadeOut {
-      to {
-        opacity: 0;
-        transform: scale(0.95);
-      }
+    @media (max-width: 768px) {
+      body { flex-direction: column; align-items: center; }
+      .main, .section { padding: 20px; width: 100%; }
     }
-
-    @keyframes glowFadeIn {
-      from {
-        opacity: 0;
-        transform: scale(0.9);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
+    .intro { max-width: 600px; }
+    .intro h2 { font-size: 28px; }
+    .intro h3 { font-size: 24px; color: orange; }
+    .intro p { font-size: 16px; color: #bbb; line-height: 1.6; }
+    .btn { display: inline-block; margin-top: 20px; background: orange; color: #fff; padding: 10px 20px; border: none; border-radius: 25px; cursor: pointer; font-size: 16px; text-decoration: none; transition: background 0.3s ease; }
+    .btn:hover { background: #e69500; }
+    .profile-img { width: 250px; height: 350px; border-radius: 10px; object-fit: cover; border: 4px solid orange; }
+    .corner { position: absolute; width: 20px; height: 20px; border: 3px solid orange; }
+    .corner.top-left { top: 40px; left: 40px; border-bottom: none; border-right: none; }
+    .corner.bottom-right { bottom: 40px; right: 30px; border-top: none; border-left: none; }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+    .section { opacity: 0; transform: translateY(30px); pointer-events: none; transition: opacity 0.4s ease, transform 0.4s ease; flex-direction: column; text-align: left; }
+    .section-header h2 { font-size: 32px; color: orange; margin-bottom: 10px; }
+    .section-header hr { width: 80px; border: 2px solid orange; margin-bottom: 30px; }
+    .section-body { font-size: 16px; color: #ccc; line-height: 1.6; max-width: 800px; }
+    .logout-icon { position: absolute; top: 10px; right: 10px; font-size: 22px; color: cyan; background: transparent; border: 2px solid cyan; border-radius: 50%; padding: 8px; cursor: pointer; transition: 0.3s; box-shadow: 0 0 10px cyan, 0 0 20px cyan; }
+    .logout-icon:hover { background: rgba(0, 255, 255, 0.1); box-shadow: 0 0 15px cyan, 0 0 30px cyan; }
+    @media (max-width: 768px) {
+      body { flex-direction: column; }
+      .sidebar { width: 100%; height: auto; flex-direction: row; justify-content: space-around; padding: 10px; }
+      .main, .section { flex-direction: column; align-items: center; text-align: center; padding: 20px; }
+      .profile-img { width: 200px; height: auto; margin-top: 20px; }
+      .corner.top-left { top: 20px; left: 20px; }
+      .corner.bottom-right { bottom: 20px; right: 20px; }
     }
+    .info-table { width: 100%; border-collapse: collapse; margin-top: 10px; animation: fadeIn 0.5s ease; }
+    .info-table th { background-color: #222; color: #00bfff; text-shadow: 0 0 6px #00bfff; transition: all 0.3s ease; }
+    .info-table td { border: 1px solid #555; padding: 12px 10px; text-align: left; color: #ccc; cursor: default; }
+    body.light-mode .info-table th, body.light-mode .info-table td { border-color: #ddd; color: #333; }
+    .info-table th { background-color: #222; color: orange; }
+    body.light-mode .info-table th { background-color: #f9f9f9; color: orange; }
+    .info-table tr.expandable { cursor: pointer; transition: background 0.3s; }
+    .info-table tr.expandable:hover { background-color: #222; }
+    .info-table th { background-color: #222; color: #00bfff; text-shadow: 0 0 6px #00bfff; transition: all 0.3s ease; }
+    .btn, .nav-link { transition: all 0.3s ease; }
+    .btn:hover, .nav-link:hover, .nav-link.active { color: #00bfff !important; text-shadow: 0 0 10px #00bfff; }
+    .corner { border-color: #00bfff; box-shadow: 0 0 10px #00bfff; }
+    .toggle-icon { float: right; transition: transform 0.3s ease, color 0.3s ease; color: #bbb; cursor: pointer; }
+    .expandable:hover .toggle-icon { color: #00bfff; text-shadow: 0 0 5px #00bfff; }
+    .expandable:hover { background-color: #1a1a1a; box-shadow: 0 0 10px rgba(0, 191, 255, 0.3); }
+    .rotated { transform: rotate(180deg); }
+    .collapsible-row { display: none; opacity: 0; transition: all 0.4s ease; }
+    .collapsible-row.show { display: table-row; opacity: 1; }
+    .collapsible-row td { background-color: #111; color: #ccc; box-shadow: inset 0 0 5px #00bfff; }
+    .glow-box { border: 1px solid #00bfff; box-shadow: 0 0 15px rgba(0, 191, 255, 0.3); border-radius: 10px; transition: box-shadow 0.4s ease; }
+    @keyframes fadeSlideUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+    @keyframes neonPulse { 0%, 100% { box-shadow: 0 0 15px #00bfff; } 50% { box-shadow: 0 0 25px #00ffff; } }
+    .switch-toggle { position: fixed; bottom: 20px; left: 20px; width: 60px; height: 30px; display: inline-block; }
+    @media (max-width: 78px) { .switch-toggle{ bottom: 80px; left: 10px; transform: scale(1.2  ) } }
+    .switch-toggle input { display: none; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; border: 2px solid #00bfff; box-shadow: 0 0 10px #00bfff; transition: 0.4s; border-radius: 30px; }
+    .slider:before { content: ""; position: absolute; height: 22px; width: 22px; left: 4px; bottom: 3px; background-color: #0ff; box-shadow: 0 0 10px #0ff; transition: 0.4s; border-radius: 50%; }
+    input:checked + .slider { background-color: #222; box-shadow: 0 0 10px orange; border-color: orange; }
+    input:checked + .slider:before { transform: translateX(30px); background-color: orange; box-shadow: 0 0 10px orange; }
+    .logout-container { position: absolute; top: 10px; right: 10px; z-index: 1000; }
+    #logout { padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    #logout:hover { background-color: #d32f2f; }
 
-    body {
-      cursor: url('https://cur.cursors-4u.net/symbols/sym-1/sym66.ani'), auto;
-    }
+    .skill-bar {
+    width: 100%;
+    height: 20px;  /* Set a height for the bar */
+    background-color: #555; /* Set a background color for the skill bar */
+    border-radius: 10px; /* Optional: to round the corners */
+    margin-bottom: 10px;  /* Space between skill bars */
+}
+
+.skill-fill {
+    height: 100%; /* Ensure it takes the full height of the .skill-bar */
+    width: 0%; /* Start from 0% */
+    background-color: #00bfff; /* Set the color of the filling */
+    transition: width 2s ease-in-out; /* Smooth width animation */
+}
+/* Contact Section */
+#contact {
+  background-color: #222;
+  color: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#contact .section-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#contact h2 {
+  font-size: 36px;
+  font-weight: 600;
+  color: #00bfff;
+}
+
+#contact p {
+  font-size: 18px;
+  color: #bbb;
+  margin-top: 10px;
+}
+
+.contact-form-container {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 15px;
+  background: transparent;
+  color: #fff;
+  border: 2px solid #00bfff;
+  border-radius: 8px;
+  font-size: 16px;
+  box-shadow: 0 0 5px rgba(0, 191, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #00ffff;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+input:focus + label,
+textarea:focus + label {
+  top: -10px;
+  left: 15px;
+  font-size: 12px;
+  color: #00ffff;
+}
+
+label {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  font-size: 16px;
+  color: #bbb;
+  transform: translateY(-50%);
+  transition: all 0.3s ease;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(45deg, #00bfff, #00ffff);
+  color: #000;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 0 15px #00bfff;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #00bfff, 0 0 30px #00ffff;
+}
+
+.contact-info {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.contact-item {
+  margin: 10px 0;
+}
+
+.contact-item i {
+  color: #00bfff;
+  margin-right: 10px;
+}
+
+.social-links {
+  margin-top: 20px;
+}
+
+.social-links .social-icon {
+  color: #00bfff;
+  margin: 0 15px;
+  font-size: 24px;
+  transition: color 0.3s ease;
+}
+
+.social-links .social-icon:hover {
+  color: #00ffff;
+}
+
+#formResponse {
+  margin-top: 20px;
+  color: #00ff00;
+  font-size: 16px;
+}
+
   </style>
 </head>
 <body>
-
-<canvas id="particles"></canvas>
-
-<div class="login-container">
-  <img src="bh2.png" alt="Logo" class="logo">
-  <h2>🔒 Argi Login Portal</h2>
-  <form id="loginForm" autocomplete="off">
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" id="username" required />
+  <div class="sidebar">
+    <h1><span>Ar</span>gi</h1>
+    <a href="#" class="nav-link active" data-section="main">Home</a>
+    <a href="#" class="nav-link" data-section="about">About</a>
+    <a href="#" class="nav-link" data-section="projects">Projects</a>
+    <a href="#" class="nav-link" data-section="contact">Contact</a>
+  </div>
+  <div class="section" id="projects">
+    <div class="section-header">
+      <h2>🧮 Calculator</h2>
+      <hr />
     </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" required />
+    <div class="calculator">
+      <div class="display" id="display">0</div>
+      <div class="buttons">
+        <button class="btn" data-value="7">7</button>
+        <button class="btn" data-value="8">8</button>
+        <button class="btn" data-value="9">9</button>
+        <button class="btn operator" data-value="/">÷</button>
+
+        <button class="btn" data-value="4">4</button>
+        <button class="btn" data-value="5">5</button>
+        <button class="btn" data-value="6">6</button>
+        <button class="btn operator" data-value="*">×</button>
+
+        <button class="btn" data-value="1">1</button>
+        <button class="btn" data-value="2">2</button>
+        <button class="btn" data-value="3">3</button>
+        <button class="btn operator" data-value="-">−</button>
+
+        <button class="btn" data-value="0">0</button>
+        <button class="btn" data-value=".">.</button>
+        <button class="btn" id="clear">C</button>
+        <button class="btn operator" data-value="+">+</button>
+
+        <button class="btn equals" id="equals">=</button>
+      </div>
     </div>
-    <button type="submit" class="btn">Login</button>
-    <div class="message" id="message"></div>
-  </form>
+    <div style="text-align: center;">
+      <h3>Snake Game</h3>
+      <button id="startButton" class="btn">Start Game</button>
+      <canvas id="gameCanvas" width="400" height="400"></canvas>
+      <div id="score">Score: 0</div>
+    </div>
+  </div>
+    <div class="logout-container">
+      <i class="fas fa-sign-out-alt logout-icon"></i>
+    </div>
+  </div>
+  <div class="main active" id="main">
+    <div class="intro">
+      <h2>Hello, my name is <span style="color: orange;">Argi San  </span></h2>
+      <h3>I'm a Graphic Designer</h3>
+      <p>
+        I'm a beginner in web design, and I truly enjoy exploring new ideas and learning as I go.
+      </p>
+    </div>
+    <div style="text-align: center;">
+      <img src="ccdb1221-3390-4a4a-a19c-51fb10248d57.jpg" alt="Portrait of Argi Sumaylo" class="profile-img" />
+      <br />
+      <a href="#" class="btn" id="moreAboutBtn" style="margin-top: 20px;">More About Me</a>
+    </div>
+    <div class="corner top-left"></div>
+    <div class="corner bottom-right"></div>
+  </div>
+
+  <div class="section" id="about">
+    <div class="section-header"><h2>About Me</h2><hr /></div>
+    <div class="section-body">
+      <div style="margin-bottom: 30px;">
+        <h3><i class="fas fa-user-circle" style="color: #00bfff; text-shadow: 0 0 8px #00bfff;"></i> Who Am I?</h3>
+        <p style="font-size: 17px; color: #bbb; line-height: 1.8;">
+          👋 I'm <strong>Argi Sumaylo</strong>, a graphic designer and aspiring web developer with a love for creativity and clean design.
+          I specialize in blending aesthetics and function — turning ideas into engaging visual experiences.
+          I’m always eager to learn and evolve, one pixel at a time.
+        </p>
+      </div>
+      <div style="margin-top: 40px;">
+        <h3 style="color: #00bfff;"><i class="fas fa-stream"></i> My Journey</h3>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-icon"><i class="fas fa-graduation-cap"></i></div>
+            <div class="timeline-content">
+              <h4>BS Information Technology</h4>
+              <small>University of Cebu – Banilad (2020 - 2023)</small>
+              <p>Gained foundational skills in tech and design.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-icon"><i class="fas fa-briefcase"></i></div>
+            <div class="timeline-content">
+              <h4>Freelance Web Designer & Developer</h4>
+              <small>2020 - 2021</small>
+              <p>Handled small client projects and honed HTML/CSS design skills.</p>
+            </div>
+          </div>
+        </div>
+        <div class="section-body">
+          <div style="margin-bottom: 10px;">
+            <p>Web Designer <span class="percent" style="float: right;">0%</span></p>
+            <div class="skill-bar">
+              <div class="skill-fill" data-percent="90"></div>
+            </div>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <p>Ms Office <span class="percent" style="float: right;">0%</span></p>
+            <div class="skill-bar">
+              <div class="skill-fill" data-percent="85"></div>
+            </div>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <p>TroubleShooting <span class="percent" style="float: right;">0%</span></p>
+            <div class="skill-bar">
+              <div class="skill-fill" data-percent="70"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+        <div style="margin-top: 40px;">
+          <h3 style="color: #00bfff;"><i class="fas fa-heart"></i>  What Powers My Code</h3>
+          <ul style="line-height: 2; color: #bbb; list-style-type: square; padding-left: 20px;">
+            <li><strong>Passionate Learner:</strong> I love exploring new tech and creative tools.</li>
+            <li><strong>Favorite Tools:</strong> Figma, Photoshop, VS Code</li>
+            <li><strong>Creative Fuel: </strong> Music, coffee, late-night coding sprints</li>
+            <li><strong>Fun Fact:      </strong> I sometimes sketch design ideas on paper before coding!</li>
+          </ul>
+        </div>
+    <div class="section" id="portfolio">
+      <div class="section-header">
+        <h2>My Work</h2>
+        <hr />
+      </div>
+      <div class="portfolio-slider">
+        <div class="slide"><img src="test.jpg" alt="Project 1" /></div>
+        <div class="slide"><img src="bh2.png" alt="Project 2" /></div>
+        <div class="slide"><img src="12.png" alt="Project 3" /></div>
+      </div>
+    </div>
+      <div style="margin-top: 40px;">
+        <details class="glow-box" style="padding: 20px; border-radius: 12px;">
+          <summary style="font-size: 18px; color: #00bfff; cursor: pointer;">
+            <i class="fas fa-info-circle"></i> More About Me
+          </summary>
+          <div style="margin-top: 15px; color: #bbb; line-height: 1.8;">
+            <p><strong>🌍 Languages:</strong> English, Cebuano, Tagalog</p>
+            <p><strong>🎨 Hobbies:</strong> Digital Art, Gaming, UI/UX exploration</p>
+            <p><strong>💪 Strengths:</strong> Creative, Detail-Oriented, Quick Learner</p>
+            <p><strong>📍 Based in:</strong> Cebu, Philippines</p>
+            <p><strong>🔗 Links:</strong> 
+              <a href="#" style="color:#00bfff;">Portfolio</a> | 
+              <a href=" https://www.tiktok.com/@wkwkargi "style="color:#00bfff;">Tiktok</a> | 
+              <a href="https://www.facebook.com/Argi22.Sumaylo" style="color:#00bfff;">Facebook</a>
+            </p>
+          </div>
+        </details>
+      </div>
+    </div> <!-- Section Body End -->
+    <div class="section-footer" style="margin-top: 40px; text-align: center;">
+      <p style="color: #bbb;">&copy; 2025 Argi Sumaylo. All rights reserved.</p>      
+    </div>
+  </div> <!-- Section End -->
+      <div class="section" id="contact">
+  <div class="section-header">
+    <h2>CONTACT</h2>
+    <p>I’d love to help! Feel free to say hello!</p>
+  </div>
+  <div class="contact-form-container">
+    <form id="contactForm">
+      <div class="form-group">
+        <input type="text" id="name" name="name" required />
+        <label for="name">Your Name</label>
+      </div>
+      <div class="form-group">
+        <input type="email" id="email" name="email" required />
+        <label for="email">Email</label>
+      </div>
+      <div class="form-group">
+        <textarea id="message" name="message" rows="6" required></textarea>
+        <label for="message">Message</label>
+      </div>
+      <button type="submit" class="btn">Send</button>
+    </form>
+    <div id="formResponse" style="display: none; color: #0f0; text-align: center;">
+      Thanks! Your message has been sent.
+    </div>
+  </div>
+
+  <div class="contact-info">
+    <div class="contact-item">
+      <i class="fas fa-phone"></i>
+      <p>0956 4318 494</p>
+    </div>
+    <div class="contact-item">
+      <i class="fas fa-envelope"></i>
+      <p>wkwk.argi20@gmail.com</p>
+    </div>
+    <div class="social-links">
+      <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+      <a href="#" class="social-icon"><i class="fab fa-google-plus-g"></i></a>
+    </div>
+  </div>
 </div>
 
-<audio id="successSound" src="yay-6120.mp3"></audio>
-<audio id="failSound" src="https://www.myinstants.com/media/sounds/error.mp3"></audio>
+ <label class="switch-toggle" title="Toggle Theme">
+  <input type="checkbox" id="themeToggle">  v   
+  <span class="slider"></span>
+  </label>
+      </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/Draggable.min.js"></script>
+  <script>
+      // Calculator logic  
+      const display = document.getElementById("display");
+      const buttons = document.querySelectorAll(".btn");
+      const equals = document.getElementById("equals");
+      const clear = document.getElementById("clear");
+      let currentInput = "";
 
-<script>
-  const form = document.getElementById('loginForm');
-  const message = document.getElementById('message');
-  const successSound = document.getElementById('successSound');
-  const failSound = document.getElementById('failSound');
+      buttons.forEach(button => {
+        button.addEventListener("click", () => {
+          const value = button.getAttribute("data-value");
+          if (value) {
+            if (display.textContent === "0" || display.textContent === "Error") {
+              currentInput = value;
+            } else {
+              currentInput += value;
+            }
+            display.textContent = currentInput;
+          }
+        });
+      });   
+      equals.addEventListener("click", () => {
+        try {
+          const result = eval(currentInput);
+          display.textContent = result;
+          currentInput = result.toString();
+        } catch { 
+          display.textContent = "Error";
+          currentInput = "";
+        }
+      });
 
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value.trim();
+      clear.addEventListener("click", () => {
+        currentInput = "";
+        display.textContent = "0";
+      });
+      // Snake Game Code
+      // ==== SNAKE GAME SETUP ====
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+const grid = 10;
+let count = 0;
+let score = 0;
+let snake, direction, food;
+let gameOver = true; // Game is "over" by default
 
-    if (username === 'argi' && password === 'password') {
-      successSound.play();
-      message.style.color = 'lightgreen';
-      message.textContent = 'Login successful!';
-      const container = document.querySelector('.login-container');
-      container.classList.add('fade-out');
-      setTimeout(() => window.location.href = "home.html", 1000);   
-    } else {
-      failSound.play();
-      message.style.color = '#f44336';
-      message.textContent = 'Invalid credentials.';
-    }
+function initializeGame() {
+  snake = [
+    { x: 9 * grid, y: 9 * grid },
+    { x: 8 * grid, y: 9 * grid },
+    { x: 7 * grid, y: 9 * grid },
+  ];
+  direction = 'RIGHT';
+  score = 0;
+  placeFood();
+  updateScore();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawFood();
+  drawSnake();
+}
+function gameLoop() {
+  if (gameOver) return;
+  requestAnimationFrame(gameLoop);
+  if (++count < 4) return;
+  count = 0;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  moveSnake();
+  checkCollision();  
+  drawFood();
+  drawSnake();
+  updateScore();
+}
+function drawSnake() {
+  snake.forEach((segment, index) => {
+    ctx.fillStyle = index === 0 ? '#00bfff' : '#fff';
+    ctx.fillRect(segment.x, segment.y, grid, grid);
   });
-
-  const canvas = document.getElementById('particles');
-  const ctx = canvas.getContext('2d');
-  let particles = [];
-
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+}
+function moveSnake() {
+  const head = { ...snake[0] };
+  if (direction === 'UP') head.y -= grid;
+  if (direction === 'DOWN') head.y += grid;
+  if (direction === 'LEFT') head.x -= grid;
+  if (direction === 'RIGHT') head.x += grid;
+  snake.unshift(head);
+  if (head.x === food.x && head.y === food.y) {
+    score += 10;
+    placeFood();
+  } else {
+    snake.pop();
   }
-
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
-
-  function Particle() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.size = Math.random() * 2 + 1;
-    this.speedX = (Math.random() - 0.5) * 0.5;
-    this.speedY = (Math.random() - 0.5) * 0.5;
+}
+function drawFood() {
+  ctx.fillStyle = '#ff6347';
+  ctx.fillRect(food.x, food.y, grid, grid);
+}
+function placeFood() {
+  food = {
+    x: Math.floor(Math.random() * (canvas.width / grid)) * grid,
+    y: Math.floor(Math.random() * (canvas.height / grid)) * grid,
+  };
+}
+function checkCollision() {
+  const head = snake[0];
+  if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
+    endGame();
   }
-
-  Particle.prototype.update = function() {
-    this.x += this.speedX;
-    this.y += this.speedY;
-    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-    }
-  };
-
-  Particle.prototype.draw = function() {  
-        ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(0, 255, 255, 0.7)';
-    ctx.fill();
-  };
-
-  function initParticles(count) {   for (let i = 0; i < count; i++) {
-      particles.push(new Particle());
+  for (let i = 1; i < snake.length; i++) {
+    if (head.x === snake[i].x && head.y === snake[i].y) {
+      endGame();
     }
   }
+}
+function endGame() {
+  if (!gameOver) {
+    alert('Game Over!');
+    gameOver = true;
+    setTimeout(() => {
+      document.getElementById('startButton').style.display = 'inline-block';
+    }, 1000);
+  }
+}
+function startGame() {
+  gameOver = false;
+  initializeGame();
+  document.getElementById('startButton').style.display = 'none';
+  gameLoop();
+}
+function updateScore() {
+  document.getElementById('score').textContent = `Score: ${score}`;
+}
+// Setup controls
+document.getElementById('startButton').addEventListener('click', startGame);
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowUp' && direction !== 'DOWN') {
+    direction = 'UP';
+  }
+  if (event.key === 'ArrowDown' && direction !== 'UP') {
+    direction = 'DOWN';
+  }
+  if (event.key === 'ArrowLeft' && direction !== 'RIGHT') {
+    direction = 'LEFT';
+  }
+  if (event.key === 'ArrowRight' && direction !== 'LEFT') {
+    direction = 'RIGHT';
+  }
+});
+// On page load, show initial state (no alert, just static board)
+initializeGame();
+document.getElementById('startButton').style.display = 'inline-block';
 
-  function animateParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-      p.update();
-      p.draw();
+
+      // === SKILL BAR ANIMATION FUNCTION ===
+      function animateSkills() {
+    const skillFills = document.querySelectorAll(".skill-fill");
+    skillFills.forEach(fill => {
+        const target = parseInt(fill.getAttribute("data-percent"));
+        const percentText = fill.closest(".skill-bar").previousElementSibling.querySelector(".percent");
+        let current = 0;
+        fill.style.width = '0%';  // Start from 0%
+        percentText.textContent = '0%';
+        
+        const interval = setInterval(() => {
+            if (current >= target) {
+                clearInterval(interval);
+            } else {
+                current++;
+                fill.style.width = `${current}%`;
+                percentText.textContent = `${current}%`;
+            }
+        }, 10); // Adjust interval speed if needed
     });
-    requestAnimationFrame(animateParticles);
-  }
+}
 
-  initParticles(80);
-  animateParticles();
-</script>
 
+
+      // === NAVIGATION LOGIC WITH SKILL BAR ANIMATION ===
+      const navLinks = document.querySelectorAll('.nav-link');
+      const sections = document.querySelectorAll('.section');
+      const mainSection = document.getElementById('main');
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          navLinks.forEach(nav => nav.classList.remove('active'));
+          this.classList.add('active');
+          const target = this.getAttribute('data-section');
+          mainSection.classList.remove('active');
+          sections.forEach(sec => sec.classList.remove('active'));
+          if (target === 'main') {
+            mainSection.classList.add('active');
+          } else {
+            document.getElementById(target).classList.add('active');
+            if (target === 'about') {
+              setTimeout(animateSkills, 200); // Delay to ensure section is visible before animating skills
+            }
+          }
+        });
+      });      
+
+      document.getElementById('moreAboutBtn').addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector('[data-section="about"]').click();
+      });
+
+      // Theme Toggle
+      const themeToggleCheckbox = document.getElementById("themeToggle");
+      window.addEventListener("DOMContentLoaded", () => {
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme === "light") {
+          document.body.classList.add("light-mode");
+          themeToggleCheckbox.checked = true;
+        } else {
+          document.body.classList.remove("light-mode");
+          themeToggleCheckbox.checked = false;
+        }
+      });
+      themeToggleCheckbox.addEventListener("change", function () {
+        if (this.checked) {
+          document.body.classList.add("light-mode");
+          localStorage.setItem("theme", "light");
+        } else {
+          document.body.classList.remove("light-mode");
+          localStorage.setItem("theme", "dark");
+        }
+      });
+
+      // Logout Button
+      document.addEventListener("DOMContentLoaded", function () {
+        const logoutBtn = document.querySelector('.logout-icon');
+        if (logoutBtn) {
+          logoutBtn.addEventListener('click', function () {
+            localStorage.clear();
+            alert("You have been logged out.");
+            window.location.href = "login.html";
+          });
+        }
+      }); 
+
+      // Contact Form Handling (for animation and submission feedback)
+        document.getElementById("contactForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+      // Assuming form submission is successful (you can replace this with actual submission code)
+        document.getElementById("formResponse").style.display = "block";
+        this.reset(); // Reset the form after submission
+      });
+      // Animate skills if About is the initial section
+      window.addEventListener("DOMContentLoaded", function() {
+        if(document.querySelector('.nav-link.active').getAttribute('data-section') === 'about') {
+          animateSkills();
+        }
+      });
+  </script>
 </body>
 </html>
